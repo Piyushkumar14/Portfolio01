@@ -4,7 +4,7 @@ import ProjectDetailsPage from "./ProjectDetailsPage";
 import {
   getNextThemeMode,
   getStoredThemeMode,
-  getTheme,
+  getTheme, 
   THEME_STORAGE_KEY,
 } from "./theme";
 import {
