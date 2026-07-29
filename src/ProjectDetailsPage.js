@@ -1,4 +1,5 @@
 import { projectDeepDive } from "./data/portfolioData";
+import "./responsive.css";
 
 function Tag({ label, T }) {
   return (
@@ -63,7 +64,7 @@ export default function ProjectDetailsPage({ project, onBackToProjects, onBackHo
         </div>
       </header>
 
-      <main style={{ padding: "70px 6% 90px" }}>
+      <main className="section-pad" style={{ padding: "70px 6% 90px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Project deep dive</p>
           <h1 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: "clamp(34px, 6vw, 56px)", color: T.navy, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: 18 }}>

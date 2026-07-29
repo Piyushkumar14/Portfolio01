@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import "./responsive.css";
 import ProjectsArchivePage from "./ProjectsArchivePage";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import {
@@ -158,6 +159,7 @@ export default function Portfolio() {
   const [skillRef, skillVis]      = useInView(0.05);
   const [expRef,   expVis]        = useInView(0.05);
   const [photoErr, setPhotoErr]   = useState(false);
+  const [menuOpen, setMenuOpen]   = useState(false);
   const T = getTheme(themeMode);
 
   const navigate = (nextPath) => {
@@ -211,7 +213,10 @@ export default function Portfolio() {
     document.body.style.color = T.ink;
   }, [T.bg, T.ink, themeMode]);
 
-  const scrollTo = id => goToSection(id);
+  const scrollTo = id => {
+    setMenuOpen(false);
+    goToSection(id);
+  };
 
   const toggleTheme = () => {
     setThemeMode((currentMode) => getNextThemeMode(currentMode));
@@ -286,8 +291,8 @@ export default function Portfolio() {
         display: "flex", alignItems: "center", padding: "0 6%", justifyContent: "space-between",
       }}>
         <span style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 15, letterSpacing: "0.1em", color: T.navy, textTransform: "uppercase" }}>PK</span>
-        <div style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", justifyContent: "flex-end" }}>
-          <div style={{ display: "flex", gap: 32, flexWrap: "wrap", justifyContent: "flex-end" }}>
+        <div className="nav-right" style={{ display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <div className={`nav-links${menuOpen ? " nav-links-open" : ""}`} style={{ display: "flex", gap: 32, flexWrap: "wrap", justifyContent: "flex-end", background: T.bg }}>
             {navItems.map(n => (
               <button key={n} onClick={() => scrollTo(n.toLowerCase())} style={{
                 background: "none", border: "none", cursor: "pointer",
@@ -309,11 +314,20 @@ export default function Portfolio() {
             onMouseEnter={e => { e.target.style.borderColor = T.accent; e.target.style.color = T.accent; }}
             onMouseLeave={e => { e.target.style.borderColor = T.border; e.target.style.color = T.ink; }}
           >{themeMode === "dark" ? "Light Mode" : "Dark Mode"}</button>
+          <button
+            className="nav-hamburger"
+            onClick={() => setMenuOpen(o => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            style={{
+              border: `1px solid ${T.border}`, borderRadius: 8, background: T.bg,
+              color: T.navy, fontSize: 16, width: 36, height: 36, cursor: "pointer",
+            }}
+          >{menuOpen ? "✕" : "☰"}</button>
         </div>
       </nav>
 
       {/* ── HERO ── */}
-      <section id="home" style={{
+      <section id="home" className="hero-section" style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         padding: "120px 6% 80px", borderBottom: `1px solid ${T.border}`, position: "relative",
       }}>
@@ -325,7 +339,7 @@ export default function Portfolio() {
         }} />
 
         <div ref={heroRef} style={{ position: "relative", width: "100%", maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{
+          <div className="hero-grid" style={{
             display: "grid", gridTemplateColumns: "1fr auto",
             gap: 80, alignItems: "center",
           }}>
@@ -357,7 +371,7 @@ export default function Portfolio() {
                 animation: heroVis ? "fadeUp 0.7s ease 0.15s both" : "none",
               }}>Data Scientist</p>
 
-              <div style={{
+              <div className="hero-info-grid" style={{
                 display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, maxWidth: 760,
                 animation: heroVis ? "fadeUp 0.7s ease 0.2s both" : "none",
               }}>
@@ -403,7 +417,7 @@ export default function Portfolio() {
 
             {/* Right: Photo */}
             <div style={{ flexShrink: 0, animation: heroVis ? "fadeIn 0.9s ease 0.2s both" : "none", opacity: 0 }}>
-              <div style={{
+              <div className="hero-photo-box" style={{
                 width: 220, height: 280, borderRadius: 20,
                 overflow: "hidden", border: `2px solid ${T.border}`,
                 position: "relative",
@@ -453,10 +467,10 @@ export default function Portfolio() {
       </section>
 
       {/* ── EXPERIENCE ── */}
-      <section id="experience" style={{ padding: "100px 6%", background: T.bgOff, borderBottom: `1px solid ${T.border}` }}>
+      <section id="experience" className="section-pad" style={{ padding: "100px 6%", background: T.bgOff, borderBottom: `1px solid ${T.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Work history</p>
-          <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em", marginBottom: 56 }}>Experience</h2>
+          <h2 className="section-heading" style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em", marginBottom: 56 }}>Experience</h2>
 
           <div ref={expRef} style={{
             display: "flex", flexDirection: "column", gap: 0,
@@ -464,7 +478,7 @@ export default function Portfolio() {
             transition: "all 0.6s ease",
           }}>
             {experience.map((exp, i) => (
-              <div key={i} style={{
+              <div key={i} className="exp-row" style={{
                 display: "grid", gridTemplateColumns: "220px 1fr",
                 gap: 48, padding: "36px 0",
                 borderTop: `1px solid ${T.border}`,
@@ -493,11 +507,11 @@ export default function Portfolio() {
       </section>
 
       {/* ── PROJECTS ── */}
-      <section id="projects" style={{ padding: "100px 6%", borderBottom: `1px solid ${T.border}` }}>
+      <section id="projects" className="section-pad" style={{ padding: "100px 6%", borderBottom: `1px solid ${T.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Selected work</p>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 56 }}>
-            <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em" }}>Projects</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 56, flexWrap: "wrap", gap: 12 }}>
+            <h2 className="section-heading" style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em" }}>Projects</h2>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.muted }}>{featuredProjects.length} projects · hover to explore</span>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 28 }}>
@@ -524,17 +538,17 @@ export default function Portfolio() {
       </section>
 
       {/* ── SKILLS ── */}
-      <section id="skills" style={{ padding: "100px 6%", background: T.bgOff, borderBottom: `1px solid ${T.border}` }}>
+      <section id="skills" className="section-pad" style={{ padding: "100px 6%", background: T.bgOff, borderBottom: `1px solid ${T.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Core competencies</p>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 64 }}>
-            <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em" }}>Skills & Tools</h2>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 64, flexWrap: "wrap", gap: 12 }}>
+            <h2 className="section-heading" style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, letterSpacing: "-0.02em" }}>Skills & Tools</h2>
             <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.muted }}>
               {skillGroups.reduce((s, g) => s + g.skills.length, 0)} tools · 4 domains
             </span>
           </div>
 
-          <div ref={skillRef} style={{
+          <div ref={skillRef} className="skills-grid" style={{
             display: "grid", gridTemplateColumns: "1fr 1fr", gap: "56px 80px",
             opacity: skillVis ? 1 : 0, transition: "opacity 0.5s ease",
           }}>
@@ -562,11 +576,11 @@ export default function Portfolio() {
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" style={{ padding: "100px 6%", borderBottom: `1px solid ${T.border}` }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
+      <section id="about" className="section-pad" style={{ padding: "100px 6%", borderBottom: `1px solid ${T.border}` }}>
+        <div className="about-grid" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
           <div>
             <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 16, letterSpacing: "0.1em", textTransform: "uppercase" }}>About</p>
-            <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, marginBottom: 32, letterSpacing: "-0.02em", lineHeight: 1.1 }}>The person<br />behind the models</h2>
+            <h2 className="section-heading" style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 40, color: T.navy, marginBottom: 32, letterSpacing: "-0.02em", lineHeight: 1.1 }}>The person<br />behind the models</h2>
             <p style={{ fontFamily: "'Source Serif 4',serif", fontWeight: 300, fontSize: 17, color: T.muted, lineHeight: 1.8, marginBottom: 20 }}>{profile.bio1}</p>
             <p style={{ fontFamily: "'Source Serif 4',serif", fontWeight: 300, fontSize: 17, color: T.muted, lineHeight: 1.8 }}>{profile.bio2}</p>
           </div>
@@ -592,10 +606,10 @@ export default function Portfolio() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" style={{ padding: "100px 6%" }}>
+      <section id="contact" className="section-pad" style={{ padding: "100px 6%" }}>
         <div style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 20, letterSpacing: "0.1em", textTransform: "uppercase" }}>Get in touch</p>
-          <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 56, color: T.navy, letterSpacing: "-0.03em", lineHeight: 1.0, marginBottom: 24 }}>
+          <h2 className="contact-heading" style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: 56, color: T.navy, letterSpacing: "-0.03em", lineHeight: 1.0, marginBottom: 24 }}>
             Let's talk<span style={{ color: T.accent }}>.</span>
           </h2>
           <p style={{ fontFamily: "'Source Serif 4',serif", fontStyle: "italic", fontWeight: 300, fontSize: 18, color: T.muted, lineHeight: 1.7, marginBottom: 48 }}>
@@ -628,7 +642,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ padding: "24px 6%", borderTop: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <footer className="site-footer" style={{ padding: "24px 6%", borderTop: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.muted }}>© 2026 Piyush Kumar</span>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.muted }}>Built with React</span>
       </footer>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import "./responsive.css";
 
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
@@ -223,7 +224,7 @@ export default function ProjectsArchivePage({ projects, onBackHome, onGoToSkills
         </div>
       </header>
 
-      <main style={{ padding: "70px 6% 90px" }}>
+      <main className="section-pad" style={{ padding: "70px 6% 90px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, marginBottom: 12, letterSpacing: "0.1em", textTransform: "uppercase" }}>Project archive</p>
           <h1 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 900, fontSize: "clamp(40px, 7vw, 64px)", color: T.navy, letterSpacing: "-0.03em", lineHeight: 1.0, marginBottom: 20 }}>
