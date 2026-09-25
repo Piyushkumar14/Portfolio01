@@ -19,11 +19,6 @@ export default function ProjectDetailsPage({ project, onBackToProjects, onBackHo
 
   return (
     <div style={{ background: T.bgOff, color: T.ink, fontFamily: "'Epilogue',sans-serif", minHeight: "100vh" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;1,300&family=JetBrains+Mono:wght@400;500&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      `}</style>
-
       <header style={{ background: T.bg, borderBottom: `1px solid ${T.border}`, padding: "22px 6%" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
@@ -94,7 +89,7 @@ export default function ProjectDetailsPage({ project, onBackToProjects, onBackHo
               <h2 style={{ fontFamily: "'Epilogue',sans-serif", fontWeight: 800, fontSize: 22, color: T.navy, marginBottom: 12 }}>How It Works</h2>
               <p style={{ fontFamily: "'Source Serif 4',serif", fontWeight: 300, fontSize: 17, color: T.muted, lineHeight: 1.8, marginBottom: 14 }}>{deepDive?.approach}</p>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {deepDive?.workflow.map((step, i) => (
+                {(deepDive?.workflow ?? []).map((step, i) => (
                   <div key={step} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
                     <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: 11, color: T.accent, paddingTop: 4 }}>{String(i + 1).padStart(2, "0")}</span>
                     <span style={{ fontFamily: "'Source Serif 4',serif", fontWeight: 300, fontSize: 16, color: T.muted, lineHeight: 1.8 }}>{step}</span>
@@ -120,18 +115,34 @@ export default function ProjectDetailsPage({ project, onBackToProjects, onBackHo
             {project.tags.map((tag) => <Tag key={tag} label={tag} T={T} />)}
           </div>
 
+          {project.demo ? (
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontFamily: "'JetBrains Mono',monospace",
+              fontSize: 12,
+              color: T.accent,
+              textDecoration: "none",
+              border: `1px solid ${T.accent}`,
+              borderRadius: 6,
+              padding: "9px 16px",
+              marginRight: 8,
+            }}>▶ Live Demo</a>
+          ) : null}
+
           <a href={project.github} style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-            fontFamily: "'JetBrains Mono',monospace",
-            fontSize: 12,
-            color: T.accent,
-            textDecoration: "none",
-            border: `1px solid ${T.accent}`,
-            borderRadius: 6,
-            padding: "9px 16px",
-          }}>↗ View on GitHub</a>
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontFamily: "'JetBrains Mono',monospace",
+              fontSize: 12,
+              color: T.accent,
+              textDecoration: "none",
+              border: `1px solid ${T.accent}`,
+              borderRadius: 6,
+              padding: "9px 16px",
+            }}>↗ View on GitHub</a>
         </div>
       </main>
     </div>

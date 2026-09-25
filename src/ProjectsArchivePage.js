@@ -154,6 +154,22 @@ function ArchiveProjectCard({ project, index, onOpenDetails, T }) {
             padding: "8px 14px",
             cursor: "pointer",
           }}>Project Details →</button>
+          <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            fontFamily: "'JetBrains Mono',monospace",
+            fontSize: 12,
+            color: T.accent,
+            textDecoration: "none",
+            border: `1px solid ${T.accent}`,
+            borderRadius: 6,
+            padding: "7px 16px",
+            transition: "background 0.2s",
+          }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = T.accentLt; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+          >▶ Live Demo</a>
           <a href={project.github} style={{
             display: "inline-flex",
             alignItems: "center",
@@ -179,11 +195,6 @@ function ArchiveProjectCard({ project, index, onOpenDetails, T }) {
 export default function ProjectsArchivePage({ projects, onBackHome, onGoToSkills, onOpenDetails, onToggleTheme, themeMode, T }) {
   return (
     <div style={{ background: T.bgOff, color: T.ink, fontFamily: "'Epilogue',sans-serif", minHeight: "100vh" }}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;1,300&family=JetBrains+Mono:wght@400;500&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      `}</style>
-
       <header style={{ background: T.bg, borderBottom: `1px solid ${T.border}`, padding: "22px 6%" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>

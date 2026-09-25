@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Component } from "react";
 import "./responsive.css";
 import ProjectsArchivePage from "./ProjectsArchivePage";
 import ProjectDetailsPage from "./ProjectDetailsPage";
 import {
   getNextThemeMode,
   getStoredThemeMode,
-  getTheme, 
+  getTheme,
   THEME_STORAGE_KEY,
 } from "./theme";
 import {
@@ -18,15 +18,53 @@ import {
 
 const navItems = ["Home", "Experience", "Projects", "Skills", "About", "Contact"];
 
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("App error boundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, background: "#f8fafc", color: "#0f172a" }}>
+          <div style={{ textAlign: "center", maxWidth: 480 }}>
+            <h1 style={{ fontSize: 24, marginBottom: 12 }}>Something went wrong</h1>
+            <p style={{ lineHeight: 1.6, color: "#475569" }}>The page hit an unexpected runtime error. Please refresh and try again.</p>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 /* ── HOOKS ───────────────────────────────────────────────────── */
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [vis, setVis] = useState(false);
+
   useEffect(() => {
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVis(true); }, { threshold });
-    if (ref.current) io.observe(ref.current);
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) setVis(true);
+    }, { threshold });
+
+    if (ref.current) {
+      io.observe(ref.current);
+    }
+
     return () => io.disconnect();
-  }, []);
+  }, [threshold]);
+
   return [ref, vis];
 }
 
@@ -134,6 +172,15 @@ function ProjectCard({ project, index, onOpenDetails, T }) {
             fontSize: 12, color: T.buttonText, background: T.navy,
             border: "none", borderRadius: 6, padding: "8px 14px", cursor: "pointer",
           }}>Project Details →</button>
+          <a href={project.demo} target="_blank" rel="noopener noreferrer" style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: T.accent,
+            textDecoration: "none", border: `1px solid ${T.accent}`,
+            borderRadius: 6, padding: "7px 16px", transition: "background 0.2s",
+          }}
+            onMouseEnter={e => e.target.style.background = T.accentLt}
+            onMouseLeave={e => e.target.style.background = "transparent"}
+          >▶ Live Demo</a>
           <a href={project.github} style={{
             display: "inline-flex", alignItems: "center", gap: 6,
             fontFamily: "'JetBrains Mono',monospace", fontSize: 12, color: T.accent,
@@ -151,7 +198,15 @@ function ProjectCard({ project, index, onOpenDetails, T }) {
 
 
 /* ── MAIN ────────────────────────────────────────────────────── */
-export default function Portfolio() {
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <Portfolio />
+    </ErrorBoundary>
+  );
+}
+
+function Portfolio() {
   const [path, setPath]         = useState(window.location.pathname);
   const [scrolled, setScrolled]   = useState(false);
   const [themeMode, setThemeMode]  = useState(() => getStoredThemeMode());
@@ -271,8 +326,6 @@ export default function Portfolio() {
   return (
     <div style={{ background: T.bg, color: T.ink, fontFamily: "'Epilogue',sans-serif", minHeight: "100vh" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;1,300&family=JetBrains+Mono:wght@400;500&display=swap');
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-thumb { background: ${T.scrollbarThumb}; border-radius: 2px; }
@@ -381,7 +434,7 @@ export default function Portfolio() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                   {[
                     ["Focus",      "ML · NLP · EDA · Prompt Eng."],
-                    ["Stack",      "Python · Scikit-learn · BERT"],
+                    ["Stack",      "Python · Scikit-learn · Machine Learning · Pandas · NumPy · Matplotlib · Seaborn · Plotly · Streamlit"],
                     ["Experience", "SOUL AI · KPIT Technologies"],
                     ["Education",  "B.Tech — LPU, 2024"],
                     ["Location",   "India"],
