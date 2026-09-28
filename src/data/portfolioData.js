@@ -76,13 +76,13 @@ export const projects = [
     demo: "https://mlinterpretorgit.streamlit.app/  ",
   },
   {
-    id: "04",
+    id: "03",
     title: "Personalized Music Recommendation",
     type: "Recommender System",
     year: "2023",
     tags: ["Python", "Spotify API", "Cosine Similarity", "Pandas"],
     summary: "Personalized music recommendation system using Spotify API that suggests similar tracks based on content features and user preferences — enabling dynamic playlist discovery.",
-    highlights: ["35% relevance improvement", "Spotify API integration", "Adapts to evolving preferences"],
+    highlights: ["35% relevance improvement", "Spotify API integration", "  Adapts to evolving preferences"],
     images: [
       {
         url: "assets/69e1a25c-9f9d-47d9-a32d-76ff17d469b9.png",
@@ -97,13 +97,13 @@ export const projects = [
     demo: "https://recommendmusic.streamlit.app/"
   },
   {
-    id: "03",
-    title: "Resume Ranking System with AI",
-    type: "NLP - Machine Learning",
-    year: "2025",
+    id: "04",
+    title: "Cryptocurrency Market Analysis Dashboard",
+    type: "Data Analytics - Machine Learning Web App",
+    year: "2026",
     tags: ["Python", "BERT", "TF-IDF", "NLP", "Flask"],
-    summary: "End-to-end resume ranking platform with multi-signal scoring (TF-IDF, BERT, and ML) that automates candidate shortlisting with transparent score breakdowns - enabling faster and more consistent hiring decisions.",
-    highlights: ["TF-IDF + BERT semantic ranking", "Configurable weighted scoring", "Fallback & diagnostic endpoints"],
+    summary: "An interactive Streamlit dashboard for exploring cryptocurrency prices, technical indicators, volatility, sentiment, and experimental forecasts.",
+    highlights: ["Python", "Volatility + Sentiment Analysis", "LSTM + ARIMA Forecasting"],
     images: [
       {
         url: "https://raw.githubusercontent.com/Ajaysdhillon/AI-Powered-Resume-Matcher-Intelligent-Job-Fit-Analysis/refs/heads/main/images/app_screenshot.png",
@@ -210,9 +210,9 @@ export const skillGroups = [
     category: "Deep Learning & AI",
     icon: "◫",
     skills: [
-      { name: "Neural Networks", pct: 68, note: "Keras - TensorFlow" },
-      { name: "LLM Prompt Engineering", pct: 78, note: "Generative AI - SOUL AI" },
-      { name: "Generative AI", pct: 65, note: "Applied LLMs" },
+      { name: "Neural Networks", pct: 50, note: "Keras - TensorFlow" },
+      { name: "LLM Prompt Engineering", pct: 60, note: "Generative AI - SOUL AI" },
+      { name: "Generative AI", pct: 30, note: "Applied LLMs" },
     ],
   },
   {
@@ -240,19 +240,6 @@ export const projectDeepDive = {
     ],
     outcome: "Automated credit risk assessment with explainable lending decisions, dynamic credit limit recommendations, and portfolio-level monitoring for scalable and transparent loan evaluation.",
   },
-  "03": {
-    challenge: "Recruiters face difficulty in screening large volumes of resumes efficiently, often relying on basic keyword filters that ignore context and fail to capture true candidate relevance. This results in inconsistent shortlisting, missed high-quality candidates, and increased manual effort.",
-    approach: "Designed a multi-signal ranking system leveraging lexical (TF-IDF), semantic (BERT), and learned (ML) signals, fused via weighted scoring and deployed as a scalable, explainable Flask-based service.",
-    workflow: [
-      "Accepts job descriptions and resume uploads through a Flask-based web interface, storing all data in a structured SQLite database for persistent tracking.",
-      "Parses resumes to extract structured information such as skills, experience, and education using NLP-based processing pipelines.",
-      "Computes multi-dimensional relevance scores (TF-IDF for keyword-level matching, BERT embeddings for semantic similarity, and an ML-based ranking model for learned scoring patterns).",
-      "Combines all signals using a configurable weighted scoring system (TF-IDF, BERT, ML) to generate a final ranking score for each candidate.",
-      "Provides score transparency and diagnostics, allowing recruiters to understand why a candidate is ranked higher through detailed score breakdowns and system endpoints.",
-      "Deploys via Flask APIs with both UI and JSON endpoints, enabling integration with external recruiter tools and scalable usage across hiring workflows.",
-    ],
-    outcome: "Automated and standardized resume shortlisting using multi-signal ranking, improving relevance and reducing manual screening effort.",
-  },
   "02": {
     challenge: "Machine learning models, especially ensemble methods, often act as black boxes, making it difficult to understand how predictions are generated. This lack of transparency reduces trust, limits debugging capability, and makes models harder to deploy in real-world decision systems.",
     approach: "Developed an interpretable ML pipeline combining tree-based ensemble models with global and local explanation techniques, delivered through an interactive Streamlit interface.",
@@ -265,7 +252,7 @@ export const projectDeepDive = {
     ],
     outcome: "Enabled transparent and interpretable ML predictions, improving model trust, debugging capability, and usability for decision-making.",
   },
-  "04": {
+  "03": {
     challenge: "Users often struggle to discover new music aligned with their taste, as traditional browsing or static playlists fail to capture nuanced preferences like audio features, genres, and listening patterns.",
     approach: "Built a content-based recommendation engine leveraging Spotify audio features and similarity metrics to generate personalized music suggestions via API integration.",
     workflow: [
@@ -277,19 +264,19 @@ export const projectDeepDive = {
     ],
     outcome: "Enabled personalized music discovery by generating relevant track recommendations based on user preferences and song-level feature similarity.",
   },
-  "05": {
-    challenge: "Credit decisions needed a risk score that is both accurate and interpretable, with thresholding aligned to business loss tolerance.",
-    approach: "Built a calibrated probability-of-default model with LightGBM and post-model threshold optimization for risk tiers.",
+  "04": {
+    challenge: "Cryptocurrency prices are volatile, and it can be difficult to make sense of historical movements across different assets and time periods. The project brings several analysis methods together in one interactive dashboard while making clear that indicators and forecasts are exploratory.",
+    approach: "Built separate Python modules for data collection, preprocessing, forecasting, sentiment scoring, and volatility analysis, then connected them through a Streamlit interface. Used pandas and NumPy for data processing, Plotly for interactive charts, and statsmodels and TensorFlow for forecasting models.",
     workflow: [
-      "Prepared borrower-level features from application and repayment history, including delinquency and utilization patterns.",
-      "Trained LightGBM with stratified CV and class imbalance handling.",
-      "Calibrated output probabilities (isotonic/platt options) to produce realistic risk estimates.",
-      "Derived business thresholds for low/medium/high risk using expected-loss tradeoff analysis.",
-      "Published scorecards and monitoring charts for drift and threshold stability.",
+      "Select a cryptocurrency and historical time period.",
+      "Retrieve price history from Yahoo Finance.",
+      "Calculate technical indicators and returns.",
+      "Choose an analysis view: overview, technical analysis, forecasting, volatility, sentiment, or asset comparison.",
+      "Review charts, metrics, and model outputs in the dashboard.",
     ],
-    outcome: "Delivered a stable and decision-ready risk scoring pipeline with strong AUC and operationally meaningful risk segments.",
+    outcome: "Created a multi-view dashboard that brings historical market data and several analysis techniques into one place. It supports exploration and learning; its sample-news sentiment and forecasts should not be treated as live signals or reliable investment predictions.",
   },
-  "06": {
+  "05": {
     challenge: "Planning teams needed reliable demand forecasts and scenario testing to reduce stock-outs and overstock events.",
     approach: "Created an ensemble forecasting workflow (Prophet + ARIMA) with a dashboard for scenario comparison across categories.",
     workflow: [
@@ -301,7 +288,7 @@ export const projectDeepDive = {
     ],
     outcome: "Enabled faster planning decisions with measurable forecast quality gains and clear visibility into seasonal risk.",
   },
-  "07": {
+  "06": {
     challenge: "Marketing campaigns were broad and inefficient because customer groups were not behaviorally segmented.",
     approach: "Built a segmentation studio using KMeans + PCA visual diagnostics to produce interpretable personas for campaign targeting.",
     workflow: [
